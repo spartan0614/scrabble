@@ -29,6 +29,9 @@ public class Mano {
             System.out.print(mostrar.getLetra()+"  ");
         }
     }
+     
+   
+     
     public void EliminarLista(){
         while(getCabeza()!= null){
             setCabeza(getCabeza().getSiguiente());

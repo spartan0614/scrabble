@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
   @author DINORA
  */
 public class Principal extends javax.swing.JFrame {
-    public Dictionary list;
+    public Dictionary listDictionary;
     public Fichas pieza;
     public AddGamers send;
     
@@ -56,7 +56,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-        list = new Dictionary();
+        listDictionary = new Dictionary();
         pieza = new Fichas();
         send = new AddGamers();
     }
@@ -80,7 +80,7 @@ public class Principal extends javax.swing.JFrame {
                 for(int i = 0; i< wordList.getLength(); i++){                
                     Node theWord = wordList.item(i);                     
                     Element wordElement = (Element) theWord;
-                    list.Insertar(wordElement.getTextContent());
+                    listDictionary.Insertar(wordElement.getTextContent());
                 }
                 
             } catch (ParserConfigurationException ex) {
@@ -402,6 +402,7 @@ public class Principal extends javax.swing.JFrame {
         RevolverFichas();               //Revolviendo Fichas
         FichasEnCola();                 //Ingresando 95 fichas en cola
         send.GetLista(pieza);           //Enviando 95 fichas
+        listDictionary.Graficar();
         send.setVisible(true);          
     }//GEN-LAST:event_btnJugarActionPerformed
 

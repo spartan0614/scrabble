@@ -133,9 +133,9 @@ public class AddGamers extends javax.swing.JFrame {
         }
         gamer.Insertar(k, jTextArea1.getText(), miMano);    //Agregando a la lista al jugador. 
         k+=1;
-        miMano.Recorrer();
+        
+//        miMano.Recorrer();
         miMano.EliminarLista();
-       
         gamer.Recorrer();            
     }//GEN-LAST:event_btnAddActionPerformed
 

@@ -17,7 +17,7 @@ public class NodoJugador {
         
         //setSiguiente(this);
     }
-
+    
     /**
      * @return the number
      */
