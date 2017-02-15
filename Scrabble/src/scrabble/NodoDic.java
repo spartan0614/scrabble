@@ -9,6 +9,7 @@ public class NodoDic {
     
     public NodoDic(String palabra){
         this.palabra = palabra;
+        this.siguiente = null;
     }    
 
     /**
@@ -38,6 +39,8 @@ public class NodoDic {
     public void setSiguiente(NodoDic siguiente) {
         this.siguiente = siguiente;
     }
+    
+    
     
     
 }

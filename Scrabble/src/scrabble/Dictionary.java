@@ -44,10 +44,8 @@ public class Dictionary {
             file = new FileWriter(archivo,true);
             contenido = CodigoGraphviz();
             file.write(contenido);
-            //file.close();
+            //file.write("Hola mundo");
             
-//            writer = new PrintWriter(file);
-//            writer.print(CodigoGraphviz());   
         } catch (Exception e) {
              System.err.println("Error al escribir el archivo grafico.txt");
         }finally{
@@ -70,7 +68,7 @@ public class Dictionary {
             cmd[4] = "C:\\Users\\ESTUARDO\\Documents\\Josselyn\\dic.png";
             
             rt.exec(cmd);
-            Thread.sleep(500);
+            
         } catch (Exception ex) {
             System.err.println("Error al generar la imagen para el archivo aux_grafico.dot");
         }
@@ -84,19 +82,17 @@ public class Dictionary {
     }
     
     public String CodigoInterno(){
-        String lineaGraph = null;
+        String lineaGraph = "";
         if(getCabeza() == null){
             lineaGraph = "Sin palabras"; 
         }else{
             NodoDic aux = getCabeza();
+            lineaGraph +="Inicio -> ";
             while(aux!= null){
-                if (lineaGraph == null){
-                    lineaGraph = aux.getPalabra() + "->" + aux.getSiguiente().getPalabra() +";\n";
-                    aux = aux.getSiguiente();
-                }
-                    lineaGraph += aux.getPalabra() + "->" + aux.getSiguiente().getPalabra() +";\n";
+                    lineaGraph += aux.getPalabra() + "->";
                     aux = aux.getSiguiente();
             }
+           lineaGraph += "Final;\n";
         }
         return lineaGraph;
     }

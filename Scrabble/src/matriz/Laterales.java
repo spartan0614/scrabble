@@ -3,24 +3,24 @@ package matriz;
 /*
     @author DINORA
  */
-public class Cabeceras {
-    private NodoCabecera primero;
-    private NodoCabecera ultimo;
+public class Laterales {
+    private NodoLateral primero;
+    private NodoLateral ultimo;
     
-    public Cabeceras(){
+    public Laterales(){
         primero = null;
         ultimo = null;
     }
     
-public void Insertar(int X){
-        NodoCabecera nuevo = new NodoCabecera(X);
+public void Insertar(int Y){
+        NodoLateral nuevo = new NodoLateral(Y);
         
         if(Vacia()){
             primero = ultimo = nuevo;   
         }else{
-            if(nuevo.getX() < getPrimero().getX()){
+            if(nuevo.getY() < getPrimero().getY()){
                 InsertarFrente(nuevo);
-            }else if(nuevo.getX() > getUltimo().getX()){
+            }else if(nuevo.getY() > getUltimo().getY()){
                 InsertarFinal(nuevo);
             }else{
                 InsertarMedio(nuevo);
@@ -28,23 +28,23 @@ public void Insertar(int X){
         }
     }
     
-    public void InsertarFrente(NodoCabecera nuevo){
+    public void InsertarFrente(NodoLateral nuevo){
         getPrimero().setAnterior(nuevo);
         nuevo.setSiguiente(getPrimero());
         setPrimero(getPrimero().getAnterior());
     }
     
-    public void InsertarFinal(NodoCabecera nuevo){
+    public void InsertarFinal(NodoLateral nuevo){
         getUltimo().setSiguiente(nuevo);
         nuevo.setAnterior(getUltimo());                              
         setUltimo(getUltimo().getSiguiente());                       
     }
     
-    public void InsertarMedio(NodoCabecera nuevo){
-        NodoCabecera aux;
-        NodoCabecera aux2;
+    public void InsertarMedio(NodoLateral nuevo){
+        NodoLateral aux;
+        NodoLateral aux2;
         aux = getPrimero();
-        while(aux.getX() < nuevo.getX()){
+        while(aux.getY() < nuevo.getY()){
             aux = aux.getSiguiente();
         }
         aux2 = aux.getAnterior();
@@ -56,34 +56,13 @@ public void Insertar(int X){
     
     public void Recorrer(){
         if(!Vacia()){
-            NodoCabecera aux = getPrimero();
+            NodoLateral aux = getPrimero();
             while(aux != null){
-                System.out.println(aux.getX());
+                System.out.println(aux.getY());
                 aux = aux.getSiguiente();
             }
         }
     }
-    
-    public boolean Existe(int x){
-        if(Vacia()){
-            return false;
-        }else{
-            NodoCabecera aux;
-            aux = getPrimero();
-            while(aux != null){
-                if(aux.getX() == x){
-                    return true;
-                }else if(aux.getSiguiente() == null){
-                    return false;
-                }
-            aux = aux.getSiguiente();
-            }
-        return false;
-        }
-        //return false;
-    }
-    
-    
     
     public boolean Vacia(){
         return getPrimero() == null;
@@ -92,33 +71,28 @@ public void Insertar(int X){
     /**
      * @return the primero
      */
-    public NodoCabecera getPrimero() {
+    public NodoLateral getPrimero() {
         return primero;
     }
 
     /**
      * @param primero the primero to set
      */
-    public void setPrimero(NodoCabecera primero) {
+    public void setPrimero(NodoLateral primero) {
         this.primero = primero;
     }
 
     /**
      * @return the ultimo
      */
-    public NodoCabecera getUltimo() {
+    public NodoLateral getUltimo() {
         return ultimo;
     }
 
     /**
      * @param ultimo the ultimo to set
      */
-    public void setUltimo(NodoCabecera ultimo) {
+    public void setUltimo(NodoLateral ultimo) {
         this.ultimo = ultimo;
     }
-    
-   
-
-    
-    
 }
