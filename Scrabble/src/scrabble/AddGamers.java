@@ -1,4 +1,5 @@
 package scrabble;
+//import matriz.*;
 /*
  @author DINORA
  */
@@ -7,6 +8,7 @@ public class AddGamers extends javax.swing.JFrame {
     public Jugador gamer;
     public Fichas todasPiezas;
     public NodoFichas fuera;
+    
     /**
      * Creates new form AddGamers
      */
@@ -15,7 +17,6 @@ public class AddGamers extends javax.swing.JFrame {
         miMano = new Mano();         //mano del jugador.
         gamer = new Jugador();       //objeto de Jugador
         todasPiezas = new Fichas();  //objeto de Fichas
-        
     }
     
      public void GetLista(Fichas allCoins){
@@ -122,7 +123,7 @@ public class AddGamers extends javax.swing.JFrame {
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
        Tablero tab = new Tablero();
-       tab.setVisible(true);
+       tab.setVisible(true);    
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed

@@ -1,11 +1,7 @@
 //**************************************LISTA SIMPLE*************************************
 package scrabble;
-
+import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /*
   @author DINORA
@@ -39,14 +35,29 @@ public class Dictionary {
     }
 
     public void Graficar(){ 
+        File archivo;
         FileWriter file = null;
-        PrintWriter writer;
+        String contenido;
+        
         try {
-            file = new FileWriter("C:\\Users\\ESTUARDO\\Documents\\grafico.txt");
-            writer = new PrintWriter(file);
-            writer.print(CodigoGraphviz());   
+            archivo = new File("C:\\Users\\ESTUARDO\\Desktop\\grafico.txt");
+            file = new FileWriter(archivo,true);
+            contenido = CodigoGraphviz();
+            file.write(contenido);
+            //file.close();
+            
+//            writer = new PrintWriter(file);
+//            writer.print(CodigoGraphviz());   
         } catch (Exception e) {
              System.err.println("Error al escribir el archivo grafico.txt");
+        }finally{
+            try{
+                if(null!= file){
+                    file.close();
+                }
+            }catch(Exception e2){
+                 System.err.println("Error al cerrar el archivo aux_grafico.dot");
+            }
         }
   
         try {
@@ -54,12 +65,12 @@ public class Dictionary {
             String[] cmd = new String[5];
             cmd[0] = "C:\\Program Files\\Graphviz2.38\\bin\\dot.exe";
             cmd[1] = "-Tpng";
-            cmd[2] = "C:\\Users\\ESTUARDO\\Documents\\grafico.txt";
+            cmd[2] = "C:\\Users\\ESTUARDO\\Desktop\\grafico.txt";
             cmd[3] = "-o";
             cmd[4] = "C:\\Users\\ESTUARDO\\Documents\\Josselyn\\dic.png";
             
             rt.exec(cmd);
-            
+            Thread.sleep(500);
         } catch (Exception ex) {
             System.err.println("Error al generar la imagen para el archivo aux_grafico.dot");
         }
