@@ -65,22 +65,34 @@ public void Insertar(int X){
     }
     
     public boolean Existe(int x){
-        if(Vacia()){
-            return false;
-        }else{
-            NodoCabecera aux;
-            aux = getPrimero();
+        NodoCabecera aux;
+        aux = getPrimero();
             while(aux != null){
                 if(aux.getX() == x){
+                    //System.out.println("SI EXISTE");
                     return true;
                 }else if(aux.getSiguiente() == null){
+        
                     return false;
                 }
             aux = aux.getSiguiente();
             }
         return false;
+    }
+    
+    public NodoCabecera Busqueda(int x){
+        if (Existe(x)){
+            NodoCabecera aux;
+            aux = getPrimero();
+            while(aux.getX() != x){
+                aux = aux.getSiguiente();
+            }
+             //System.out.println(aux.getX());
+            return aux;
+        }else {
+            
         }
-        //return false;
+        return null;
     }
     
     

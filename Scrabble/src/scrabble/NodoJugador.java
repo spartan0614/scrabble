@@ -15,7 +15,7 @@ public class NodoJugador {
         this.user = user;
         this.misFichas = misFichas;
         
-        //setSiguiente(this);
+        setSiguiente(this);
     }
     
     /**

@@ -1,16 +1,31 @@
 package scrabble;
 
+import java.io.IOException;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 /*
  @author DINORA
  */
 public class Tablero extends javax.swing.JFrame {
 
+    ImageIcon img;
     /**
      * Creates new form Tablero
      */
     public Tablero() {
         initComponents();
     }
+    
+    public void GetImageDic(String path){
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(path));
+        JLabel l = new JLabel(img);
+        jPanelDic.add(l);
+        
+        
+    }
+    
+    
+    
   
     /**
      * This method is called from within the constructor to initialize the form.

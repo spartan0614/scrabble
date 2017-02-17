@@ -34,7 +34,7 @@ public class Jugador {
         if (!esVacia()){
             NodoJugador aux = getCabeza();
             do{
-                System.out.println(aux.getNumber() + ""+ aux.getUser());
+                System.out.println(aux.getNumber() + ""+ aux.getUser() + "" + aux.getMisFichas().getCabeza());
                 aux = aux.getSiguiente();
             }while(aux != getCabeza());
         }    

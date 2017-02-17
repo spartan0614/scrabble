@@ -44,8 +44,7 @@ public class Dictionary {
             file = new FileWriter(archivo,true);
             contenido = CodigoGraphviz();
             file.write(contenido);
-            //file.write("Hola mundo");
-            
+
         } catch (Exception e) {
              System.err.println("Error al escribir el archivo grafico.txt");
         }finally{

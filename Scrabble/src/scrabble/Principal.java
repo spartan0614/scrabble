@@ -1,6 +1,8 @@
 package scrabble;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +23,12 @@ public class Principal extends javax.swing.JFrame {
     public Dictionary listDictionary;
     public Fichas pieza;
     public AddGamers send;
+    int dimension = 0;
+    List<Integer> xDobles = new ArrayList();
+    List<Integer> yDobles = new ArrayList();
+    List<Integer> xTriples = new ArrayList();
+    List<Integer> yTriples = new ArrayList();
+    
     
     int A = 0; //1
     int E = 0; //2
@@ -83,6 +91,39 @@ public class Principal extends javax.swing.JFrame {
                     listDictionary.Insertar(wordElement.getTextContent());
                 }
                 
+                NodeList tamaño = doc.getElementsByTagName("dimension");   //etiqueta <dimension>
+                Node t = tamaño.item(0);
+                Element lenghtElement = (Element) t;
+                dimension = Integer.parseInt(lenghtElement.getTextContent());
+                System.out.println(dimension);
+                
+                NodeList dobles = doc.getElementsByTagName("dobles");       //etiqueta <dobles>
+                Node d = dobles.item(0);
+                Element plustwo = (Element) d;
+                NodeList sectionD = plustwo.getElementsByTagName("casilla");  //etiqueta <casilla>
+                for(int k = 0; k< sectionD.getLength(); k++){
+                    Node NodeDouble = sectionD.item(k);
+                        if(NodeDouble.getNodeType() == Node.ELEMENT_NODE){
+                            Element ElementDouble = (Element) NodeDouble;
+                            xDobles.add(Integer.parseInt(ElementDouble.getElementsByTagName("x").item(0).getTextContent()));
+                            yDobles.add(Integer.parseInt(ElementDouble.getElementsByTagName("y").item(0).getTextContent()));   
+                        }                   
+                }
+                
+                NodeList triples = doc.getElementsByTagName("triples");       //etiqueta <triples>
+                Node t3 = triples.item(0);
+                Element plusthree = (Element) t3;
+                NodeList sectionT = plusthree.getElementsByTagName("casilla");  //etiqueta <casilla>
+                for(int q = 0; q< sectionT.getLength(); q++){
+                    Node NodeT = sectionT.item(q);
+                        if(NodeT.getNodeType() == Node.ELEMENT_NODE){
+                            Element ElementTriple = (Element) NodeT;
+                            xTriples.add(Integer.parseInt(ElementTriple.getElementsByTagName("x").item(0).getTextContent()));
+                            yTriples.add(Integer.parseInt(ElementTriple.getElementsByTagName("y").item(0).getTextContent()));   
+                        }                   
+                }
+              
+                
             } catch (ParserConfigurationException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SAXException ex) {
@@ -91,6 +132,8 @@ public class Principal extends javax.swing.JFrame {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        
     }
     
     public void RevolverFichas(){ 
@@ -395,14 +438,19 @@ public class Principal extends javax.swing.JFrame {
     private void btnArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchivoActionPerformed
         leerArchivo();
         btnJugar.setEnabled(true);
-        //list.Recorrer();
+       
     }//GEN-LAST:event_btnArchivoActionPerformed
 
     private void btnJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugarActionPerformed
         RevolverFichas();               //Revolviendo Fichas
         FichasEnCola();                 //Ingresando 95 fichas en cola
         send.GetLista(pieza);           //Enviando 95 fichas
-        listDictionary.Graficar();
+        listDictionary.Graficar();      //Graficando la lista simple de palabras que contiene el diccionario.
+         for(int i=0; i<xDobles.size(); i++){
+                System.out.println("Dobles: " + i + "   " + xDobles.get(i).toString() + yDobles.get(i).toString());
+                System.out.println("Triples: " + i + "   " + xTriples.get(i).toString() + yTriples.get(i).toString());
+        }  
+        
         send.setVisible(true);          
     }//GEN-LAST:event_btnJugarActionPerformed
 

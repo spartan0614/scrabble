@@ -64,6 +64,41 @@ public void Insertar(int Y){
         }
     }
     
+    public boolean Existe(int y){
+        if(Vacia()){
+            return false;
+        }else{
+            NodoLateral aux;
+            aux = getPrimero();
+            while(aux != null){
+                if(aux.getY() == y){
+                    //System.out.println("SI EXISTE");
+                    return true;
+                }else if(aux.getSiguiente() == null){
+        
+                    return false;
+                }
+            aux = aux.getSiguiente();
+            }
+        }
+        return false;
+    }
+    
+    public NodoLateral Busqueda(int y){
+        if (Existe(y)){
+            NodoLateral aux;
+            aux = getPrimero();
+            while(aux.getY() != y){
+                aux = aux.getSiguiente();
+            }
+            //System.out.print(aux.getY());
+            return aux;
+        }else {
+            
+        }
+        return null;
+    }
+    
     public boolean Vacia(){
         return getPrimero() == null;
     }    
