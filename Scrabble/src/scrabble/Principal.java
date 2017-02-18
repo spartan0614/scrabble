@@ -23,7 +23,9 @@ public class Principal extends javax.swing.JFrame {
     public Dictionary listDictionary;
     public Fichas pieza;
     public AddGamers send;
-    int dimension = 0;
+    
+    
+    int dimension;
     List<Integer> xDobles = new ArrayList();
     List<Integer> yDobles = new ArrayList();
     List<Integer> xTriples = new ArrayList();
@@ -67,6 +69,7 @@ public class Principal extends javax.swing.JFrame {
         listDictionary = new Dictionary();
         pieza = new Fichas();
         send = new AddGamers();
+        
     }
 
     public void leerArchivo(){
@@ -95,7 +98,9 @@ public class Principal extends javax.swing.JFrame {
                 Node t = tamaño.item(0);
                 Element lenghtElement = (Element) t;
                 dimension = Integer.parseInt(lenghtElement.getTextContent());
-                System.out.println(dimension);
+                //Tablero tab = new Tablero();
+                //tab.ObtenerDimension(dimension);
+                
                 
                 NodeList dobles = doc.getElementsByTagName("dobles");       //etiqueta <dobles>
                 Node d = dobles.item(0);

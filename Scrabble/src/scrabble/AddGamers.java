@@ -132,8 +132,8 @@ public class AddGamers extends javax.swing.JFrame {
 //        NodoOrtogonal nodo1;
 //        nodo1 = nodo.getColumna().getPrimero().getAbajo().getAbajo().getDerecha();
 //        System.out.println(nodo1.getValor() + " "+ nodo1.getX() + " " +nodo1.getY());
-//       Tablero tab = new Tablero();
-//       tab.setVisible(true);
+       Tablero tab = new Tablero();
+       tab.setVisible(true);
        
     }//GEN-LAST:event_btnInicioActionPerformed
 

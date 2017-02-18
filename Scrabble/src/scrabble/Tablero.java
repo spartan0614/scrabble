@@ -1,32 +1,52 @@
 package scrabble;
-
-import java.io.IOException;
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.JButton;
+
 /*
  @author DINORA
  */
 public class Tablero extends javax.swing.JFrame {
 
-    ImageIcon img;
-    /**
-     * Creates new form Tablero
-     */
+    Image img;
+    int dimension;
+    JButton[][] table;
+    int movX = 3;
+    int movY = 3;
+    
+    public void ObtenerDimension(int tamaño){
+        dimension = tamaño;
+    }
+    
     public Tablero() {
         initComponents();
-    }
-    
-    public void GetImageDic(String path){
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(path));
-        JLabel l = new JLabel(img);
-        jPanelDic.add(l);
         
-        
+        table = new JButton[dimension][dimension];
+            
+            for(int i =0; i<dimension; i++){
+                for(int j=0; j<dimension; j++){
+                    
+                    table[i][j] = new JButton();
+                    table[i][j].setBounds(movX, movY, 30, 30);
+                    add(table[i][j]);
+                    movX += 32;
+                }
+                movY += 32;
+                movX = 3; 
+            }
+     
+        GetImageDic();
+        this.setLocationRelativeTo(null);
     }
+     
+    public void GetImageDic(){
+        
+            //agregando grafo de las palabras del diccionario.
+            jLabelDic.setIcon(new ImageIcon("C:\\Users\\ESTUARDO\\Documents\\Josselyn\\dic.png"));
+     }
     
-    
-    
-  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,8 +59,10 @@ public class Tablero extends javax.swing.JFrame {
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jPanelGamers = new javax.swing.JPanel();
         jPanelDic = new javax.swing.JPanel();
+        jLabelDic = new javax.swing.JLabel();
         jPanelCoins = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
@@ -49,11 +71,11 @@ public class Tablero extends javax.swing.JFrame {
         jPanelGamers.setLayout(jPanelGamersLayout);
         jPanelGamersLayout.setHorizontalGroup(
             jPanelGamersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 334, Short.MAX_VALUE)
+            .addGap(0, 364, Short.MAX_VALUE)
         );
         jPanelGamersLayout.setVerticalGroup(
             jPanelGamersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 463, Short.MAX_VALUE)
+            .addGap(0, 491, Short.MAX_VALUE)
         );
 
         jTabbedPane4.addTab("Jugadores", jPanelGamers);
@@ -62,11 +84,17 @@ public class Tablero extends javax.swing.JFrame {
         jPanelDic.setLayout(jPanelDicLayout);
         jPanelDicLayout.setHorizontalGroup(
             jPanelDicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 334, Short.MAX_VALUE)
+            .addGroup(jPanelDicLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelDic, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelDicLayout.setVerticalGroup(
             jPanelDicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 463, Short.MAX_VALUE)
+            .addGroup(jPanelDicLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelDic, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane4.addTab("Diccionario", jPanelDic);
@@ -75,11 +103,11 @@ public class Tablero extends javax.swing.JFrame {
         jPanelCoins.setLayout(jPanelCoinsLayout);
         jPanelCoinsLayout.setHorizontalGroup(
             jPanelCoinsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 334, Short.MAX_VALUE)
+            .addGap(0, 364, Short.MAX_VALUE)
         );
         jPanelCoinsLayout.setVerticalGroup(
             jPanelCoinsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 463, Short.MAX_VALUE)
+            .addGap(0, 491, Short.MAX_VALUE)
         );
 
         jTabbedPane4.addTab("Fichas", jPanelCoins);
@@ -87,27 +115,42 @@ public class Tablero extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         jLabel1.setText("Reportes");
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 739, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(784, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(159, 159, 159))))
+                        .addGap(166, 166, 166))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -151,6 +194,8 @@ public class Tablero extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelDic;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelCoins;
     private javax.swing.JPanel jPanelDic;
     private javax.swing.JPanel jPanelGamers;
