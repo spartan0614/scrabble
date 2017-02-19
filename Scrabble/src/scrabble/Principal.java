@@ -1,4 +1,5 @@
 package scrabble;
+import matriz.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,12 +25,11 @@ public class Principal extends javax.swing.JFrame {
     public Fichas pieza;
     public AddGamers send;
     
-    
     int dimension;
-    List<Integer> xDobles = new ArrayList();
-    List<Integer> yDobles = new ArrayList();
-    List<Integer> xTriples = new ArrayList();
-    List<Integer> yTriples = new ArrayList();
+    List<Integer> xDobles = new ArrayList<>();
+    List<Integer> yDobles = new ArrayList<>();
+    List<Integer> xTriples = new ArrayList<>();
+    List<Integer> yTriples = new ArrayList<>();
     
     
     int A = 0; //1
@@ -98,8 +98,7 @@ public class Principal extends javax.swing.JFrame {
                 Node t = tamaño.item(0);
                 Element lenghtElement = (Element) t;
                 dimension = Integer.parseInt(lenghtElement.getTextContent());
-                //Tablero tab = new Tablero();
-                //tab.ObtenerDimension(dimension);
+                send.GetDimension(dimension);
                 
                 
                 NodeList dobles = doc.getElementsByTagName("dobles");       //etiqueta <dobles>
@@ -111,10 +110,10 @@ public class Principal extends javax.swing.JFrame {
                         if(NodeDouble.getNodeType() == Node.ELEMENT_NODE){
                             Element ElementDouble = (Element) NodeDouble;
                             xDobles.add(Integer.parseInt(ElementDouble.getElementsByTagName("x").item(0).getTextContent()));
-                            yDobles.add(Integer.parseInt(ElementDouble.getElementsByTagName("y").item(0).getTextContent()));   
+                            yDobles.add(Integer.parseInt(ElementDouble.getElementsByTagName("y").item(0).getTextContent())); 
                         }                   
                 }
-                
+                System.out.println();
                 NodeList triples = doc.getElementsByTagName("triples");       //etiqueta <triples>
                 Node t3 = triples.item(0);
                 Element plusthree = (Element) t3;
@@ -124,7 +123,7 @@ public class Principal extends javax.swing.JFrame {
                         if(NodeT.getNodeType() == Node.ELEMENT_NODE){
                             Element ElementTriple = (Element) NodeT;
                             xTriples.add(Integer.parseInt(ElementTriple.getElementsByTagName("x").item(0).getTextContent()));
-                            yTriples.add(Integer.parseInt(ElementTriple.getElementsByTagName("y").item(0).getTextContent()));   
+                            yTriples.add(Integer.parseInt(ElementTriple.getElementsByTagName("y").item(0).getTextContent())); 
                         }                   
                 }
               
@@ -137,8 +136,6 @@ public class Principal extends javax.swing.JFrame {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-        
     }
     
     public void RevolverFichas(){ 
@@ -283,79 +280,79 @@ public class Principal extends javax.swing.JFrame {
     public void FichasEnCola(){
         for(int i=0; i< coins.length; i++){
             if(coins[i] == 1){     //A
-                pieza.Insertar("A", 1);
+                pieza.Insertar(1,"A", 1);
             }
             if(coins[i] == 2){      //E
-                pieza.Insertar("E", 1);
+                pieza.Insertar(2,"E", 1);
             }
             if(coins[i] == 3){      //O
-                pieza.Insertar("O", 1);
+                pieza.Insertar(3,"O", 1);
             }
             if(coins[i] == 4){      //I
-                pieza.Insertar("I", 1);
+                pieza.Insertar(4,"I", 1);
             }
             if(coins[i] == 5){      //S
-                pieza.Insertar("S", 1);
+                pieza.Insertar(5,"S", 1);
             }
             if(coins[i] == 6){      //N
-                pieza.Insertar("N", 1);
+                pieza.Insertar(6,"N", 1);
             }
             if(coins[i] == 7){      //L
-                pieza.Insertar("L", 1);
+                pieza.Insertar(7,"L", 1);
             }
             if(coins[i] == 8){      //R
-                pieza.Insertar("R", 1);
+                pieza.Insertar(8,"R", 1);
             }
             if(coins[i] == 9){      //U
-                pieza.Insertar("U", 1);
+                pieza.Insertar(9,"U", 1);
             }
             if(coins[i] == 10){     //T
-                pieza.Insertar("T",1);
+                pieza.Insertar(10,"T",1);
             }
             if(coins[i] == 11){     //D
-                pieza.Insertar("D", 2);
+                pieza.Insertar(11,"D", 2);
             }
             if(coins[i] == 12){     //G
-                pieza.Insertar("G", 2);
+                pieza.Insertar(12,"G", 2);
             }
             if(coins[i] == 13){     //C
-                pieza.Insertar("C", 3);
+                pieza.Insertar(13,"C", 3);
             }
             if(coins[i] == 14){     //B
-                pieza.Insertar("B", 3);
+                pieza.Insertar(14,"B", 3);
             }
             if(coins[i] == 15){     //M
-                pieza.Insertar("M", 3);
+                pieza.Insertar(15,"M", 3);
             }
             if(coins[i] == 16){     //P
-                pieza.Insertar("P", 3);
+                pieza.Insertar(16,"P", 3);
             }
             if(coins[i] == 17){     //H
-                pieza.Insertar("H", 4);
+                pieza.Insertar(17,"H", 4);
             }
             if(coins[i] == 18){     //F
-                pieza.Insertar("F", 4);
+                pieza.Insertar(18,"F", 4);
             }
             if(coins[i] == 19){     //V
-                pieza.Insertar("V", 4);
+                pieza.Insertar(19,"V", 4);
             }
             if(coins[i] == 20){     //Y
-                pieza.Insertar("Y", 4);
+                pieza.Insertar(20,"Y", 4);
             }
             if(coins[i] == 21){     //Q
-                pieza.Insertar("Q", 5);
+                pieza.Insertar(21,"Q", 5);
             }
             if(coins[i] == 22){     //J
-                pieza.Insertar("J", 8);
+                pieza.Insertar(22,"J", 8);
             }
             if(coins[i] == 23){     //Ñ
-                pieza.Insertar("Ñ", 8);
+                pieza.Insertar(23,"Ñ", 8);
             }
             if(coins[i] == 24){     //X
-                pieza.Insertar("X", 8);
+                pieza.Insertar(24,"X", 8);
             }
             if(coins[i] == 25){     //Z
-                pieza.Insertar("Z", 10);
+                pieza.Insertar(25,"Z", 10);
             }
         }
     } 
@@ -450,11 +447,15 @@ public class Principal extends javax.swing.JFrame {
         RevolverFichas();               //Revolviendo Fichas
         FichasEnCola();                 //Ingresando 95 fichas en cola
         send.GetLista(pieza);           //Enviando 95 fichas
+        
+       send.GetDoubleX(xDobles);
+       send.GetDoubleY(yDobles);
+       send.GetTripleX(xTriples);
+       send.GetTripleY(yTriples);
+    
+       
         listDictionary.Graficar();      //Graficando la lista simple de palabras que contiene el diccionario.
-         for(int i=0; i<xDobles.size(); i++){
-                System.out.println("Dobles: " + i + "   " + xDobles.get(i).toString() + yDobles.get(i).toString());
-                System.out.println("Triples: " + i + "   " + xTriples.get(i).toString() + yTriples.get(i).toString());
-        }  
+        
         
         send.setVisible(true);          
     }//GEN-LAST:event_btnJugarActionPerformed

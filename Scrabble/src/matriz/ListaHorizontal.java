@@ -12,9 +12,7 @@ public class ListaHorizontal {
         ultimo = null;
     }
     
-    public void Insertar(int X,int Y, int valor, boolean taken){
-        NodoOrtogonal nuevo = new NodoOrtogonal(X,Y,valor,taken);
-        
+    public void Insertar(NodoOrtogonal nuevo){ 
         if(Vacia()){
             primero = ultimo = nuevo;   
         }else{

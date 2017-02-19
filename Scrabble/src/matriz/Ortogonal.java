@@ -7,10 +7,12 @@ import java.util.List;
 public class Ortogonal {
     private Cabeceras c;
     private Laterales l;
-    List<Integer> xDobles = new ArrayList();
-    List<Integer> yDobles = new ArrayList();
-    List<Integer> xTriples = new ArrayList();
-    List<Integer> yTriples = new ArrayList();
+    boolean tieneMayorValor = false;
+    
+    List<Integer> xDobles = new ArrayList<>();
+    List<Integer> yDobles = new ArrayList<>();
+    List<Integer> xTriples = new ArrayList<>();
+    List<Integer> yTriples = new ArrayList<>();
     
     public Ortogonal(){
         c = new Cabeceras();
@@ -21,16 +23,19 @@ public class Ortogonal {
         xDobles = xD;
     }
     public void GetDoubleY(List<Integer> yD){
-        xDobles = yD;
+        yDobles = yD;
     }
     public void GetTripleX(List<Integer> xT){
-        xDobles = xT;
+        xTriples = xT;
     }
     public void GetTripleY(List<Integer> yT){
-        xDobles = yT;
+        yTriples= yT;
     }
     
+    
     public void Insertar(int x, int y, int valor, boolean taken){ 
+        NodoOrtogonal nuevo = new NodoOrtogonal(x,y,valor,taken);
+        
         if(getC().Existe(x)== false){
             getC().Insertar(x);
         }
@@ -42,18 +47,31 @@ public class Ortogonal {
         auxC = getC().Busqueda(x);
         auxL = getL().Busqueda(y);
         
-        auxC.getColumna().Insertar(x, y, valor, taken);
-        auxL.getFila().Insertar(x, y, valor, taken);
+        auxC.getColumna().Insertar(nuevo);
+        auxL.getFila().Insertar(nuevo);
         System.out.println();
     }
     
     public void Llenar(int x, int y){
-        for(int j= 0; j<y; j++){
-            for(int i = 0; i<x; i++){
+        for(int i= 0; i<x; i++){
+            for(int j = 0; j<y; j++){
+               
                 Insertar(i,j,1,false);
+                
+//                for(int k = 0; k<xDobles.size(); k++){
+//                    if(xDobles.get(k)== i && yDobles.get(k) == j ){
+//                        Insertar(i,j,2,false);
+//                       
+//                    }
+//                }
+//                for(int w = 0; w<xTriples.size(); w++){
+//                    if(xTriples.get(w)== i && yTriples.get(w) == j ){
+//                        Insertar(i,j,3,false);
+//                    }
+//                }
+               
             }
-        System.out.println();
-        }
+        }     
     } 
 
     /**

@@ -31,10 +31,15 @@ public class Jugador {
     }
     
     public void Recorrer(){
+       
+       
+        
         if (!esVacia()){
             NodoJugador aux = getCabeza();
             do{
-                System.out.println(aux.getNumber() + ""+ aux.getUser() + "" + aux.getMisFichas().getCabeza());
+                System.out.print(aux.getNumber() + "    "+ aux.getUser() + "   Sus fichas:   ");
+                aux.getMisFichas().Recorrer();
+                
                 aux = aux.getSiguiente();
             }while(aux != getCabeza());
         }    

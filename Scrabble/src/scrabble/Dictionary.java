@@ -38,7 +38,6 @@ public class Dictionary {
         File archivo;
         FileWriter file = null;
         String contenido;
-        
         try {
             archivo = new File("C:\\Users\\ESTUARDO\\Desktop\\grafico.txt");
             file = new FileWriter(archivo,true);
@@ -56,7 +55,6 @@ public class Dictionary {
                  System.err.println("Error al cerrar el archivo aux_grafico.dot");
             }
         }
-  
         try {
             Runtime rt = Runtime.getRuntime();
             String[] cmd = new String[5];

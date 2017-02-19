@@ -12,8 +12,8 @@ public class Fichas {
         fin = null;
     }
     
-    public void Insertar(String letra, int valor){
-        NodoFichas nuevo = new NodoFichas(letra, valor);
+    public void Insertar(int idLetra, String letra, int valor){
+        NodoFichas nuevo = new NodoFichas(idLetra, letra, valor);
     
         if(this.getCabeza() == null && this.getFin() == null){
             setCabeza(nuevo);
@@ -44,6 +44,8 @@ public class Fichas {
             System.out.print(aux.getLetra() + "    ");
         }
     }
+    
+    
     
     
     /**

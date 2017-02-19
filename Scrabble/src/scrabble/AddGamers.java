@@ -1,15 +1,38 @@
 package scrabble;
+import java.util.ArrayList;
+import java.util.List;
 import matriz.*;
 /*
  @author DINORA
  */
 public class AddGamers extends javax.swing.JFrame {
     Mano miMano;
+   
     Jugador gamer;
     Fichas todasPiezas;
     NodoFichas fuera;
     Ortogonal matrix;
+    int dimension;
     int k = 0;
+    
+    List<Integer> xDobles = new ArrayList<>();
+    List<Integer> yDobles = new ArrayList<>();
+    List<Integer> xTriples = new ArrayList<>();
+    List<Integer> yTriples = new ArrayList<>();
+    
+    public void GetDoubleX(List<Integer> xDoble){
+        xDobles = xDoble;
+    }
+    public void GetDoubleY(List<Integer> yDoble){
+        yDobles = yDoble;
+    }
+    public void GetTripleX(List<Integer> xTriple){
+        xTriples = xTriple;
+    }
+    public void GetTripleY(List<Integer> yTriple){
+        yTriples = yTriple;
+    }
+    
     /**
      * Creates new form AddGamers
      */
@@ -24,6 +47,10 @@ public class AddGamers extends javax.swing.JFrame {
      public void GetLista(Fichas allCoins){
         todasPiezas = allCoins;            //obteniendo las 95 fichas revueltas para repartir a jugadores.
     }
+     
+    public void GetDimension(int tamaño){
+        dimension = tamaño;
+    } 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,11 +74,13 @@ public class AddGamers extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.setAutoscrolls(false);
         jScrollPane1.setViewportView(jTextArea1);
 
         jLabel2.setText("Nombre de Usuario");
 
         btnInicio.setText("Iniciar");
+        btnInicio.setEnabled(false);
         btnInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInicioActionPerformed(evt);
@@ -124,39 +153,50 @@ public class AddGamers extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-        matrix.Llenar(3, 3);
+        matrix.GetDoubleX(xDobles);
+        matrix.GetDoubleY(yDobles);
+        matrix.GetTripleX(xTriples);
+        matrix.GetTripleY(yTriples);
+        
+        matrix.Llenar(dimension, dimension);
         
 //        NodoCabecera nodo;
 //        nodo = matrix.getC().Busqueda(2);
-//        
 //        NodoOrtogonal nodo1;
 //        nodo1 = nodo.getColumna().getPrimero().getAbajo().getAbajo().getDerecha();
 //        System.out.println(nodo1.getValor() + " "+ nodo1.getX() + " " +nodo1.getY());
+        
        Tablero tab = new Tablero();
-       tab.setVisible(true);
+       tab.ObtenerDimension(dimension);
+       tab.GetMatrizLogica(matrix);
+       tab.GetJugadores(gamer);
+       tab.Mostrando();
+        tab.setVisible(true);
+        
+        
+       
+      
        
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        
+        Mano almacenar;
         for(int i=0; i<7; i++){                             //creando la mano de 7 fichas del jugador desde todosPiezas.
             fuera = todasPiezas.Quitar();
-            miMano.Insertar(fuera.getLetra(),fuera.getValor()); 
+            miMano.Insertar(fuera.getIdLetra(),fuera.getLetra(),fuera.getValor()); 
         }
+        almacenar = miMano;
         
-        gamer.Insertar(k +=1, jTextArea1.getText(), miMano);    //Agregando a la lista al jugador. 
+        gamer.Insertar(k +=1, jTextArea1.getText(), almacenar);    //Agregando a la lista al jugador. 
+        jTextArea1.setText("");
         
-//        NodoFichas aux;
-//        for(aux = miMano.getCabeza(); aux != null; aux = aux.getSiguiente()){
-//            System.out.print(aux.getLetra() + "    ");
-//        }
-        /*creando este método puedo ingresar a cada una de las fichas del jugadores y obtener las letras para poder
-        mostrarlas en el tablero*/
-        
-        miMano.Recorrer();
         gamer.Recorrer();  
-        miMano.EliminarLista();
-                  
+        System.out.println();
+        miMano.EliminarLista(); 
+
+        btnInicio.setEnabled(true);
+         
+               
     }//GEN-LAST:event_btnAddActionPerformed
 
     /**
