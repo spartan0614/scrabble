@@ -30,7 +30,7 @@ public class Mano {
      public void Recorrer(){   
         NodoFichas mostrar;       
         for(mostrar = getCabeza(); mostrar != null; mostrar = mostrar.getSiguiente()){
-            System.out.print(mostrar.getLetra()+"  ");
+            System.out.println(mostrar.getLetra()+"  ");
         }
     }     
     public void EliminarLista(){
@@ -39,25 +39,28 @@ public class Mano {
         }
     }
     
-     public void Graficar(){ 
+     public void Graficar(String path){ 
         File archivo;
         FileWriter file = null;
         String contenido;
         try {
-            archivo = new File("C:\\Users\\ESTUARDO\\Desktop\\grafico.txt");
+            archivo = new File("C:\\Users\\ESTUARDO\\Desktop\\"+path+".txt");
+            if(archivo.exists()){
+                archivo.delete();
+            }
             file = new FileWriter(archivo,true);
             contenido = CodigoGraphviz();
             file.write(contenido);
 
         } catch (Exception e) {
-             System.err.println("Error al escribir el archivo grafico.txt");
+             System.err.println("Error al escribir el archivo .txt");
         }finally{
             try{
                 if(null!= file){
                     file.close();
                 }
             }catch(Exception e2){
-                 System.err.println("Error al cerrar el archivo aux_grafico.dot");
+                 System.err.println("Error al cerrar el archivo .dot");
             }
         }
         try {
@@ -65,9 +68,9 @@ public class Mano {
             String[] cmd = new String[5];
             cmd[0] = "C:\\Program Files\\Graphviz2.38\\bin\\dot.exe";
             cmd[1] = "-Tpng";
-            cmd[2] = "C:\\Users\\ESTUARDO\\Desktop\\grafico.txt";
+            cmd[2] = "C:\\Users\\ESTUARDO\\Desktop\\"+path+".txt";
             cmd[3] = "-o";
-            cmd[4] = "C:\\Users\\ESTUARDO\\Documents\\Josselyn\\dic.png";
+            cmd[4] = "C:\\Users\\ESTUARDO\\Documents\\Josselyn\\"+path+".png";
             
             rt.exec(cmd);
             

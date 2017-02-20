@@ -1,5 +1,4 @@
 package scrabble;
-import matriz.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -454,7 +453,7 @@ public class Principal extends javax.swing.JFrame {
        send.GetTripleY(yTriples);
     
        
-        listDictionary.Graficar();      //Graficando la lista simple de palabras que contiene el diccionario.
+        listDictionary.Graficar("diccionario");      //Graficando la lista simple de palabras que contiene el diccionario.
         
         
         send.setVisible(true);          

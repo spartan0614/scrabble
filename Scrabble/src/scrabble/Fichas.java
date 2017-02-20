@@ -1,5 +1,9 @@
 //**************************************** COLA ************************************
 package scrabble;
+
+import java.io.File;
+import java.io.FileWriter;
+
 /*
   @author DINORA
  */
@@ -43,6 +47,68 @@ public class Fichas {
         for(aux = getCabeza(); aux != null; aux = aux.getSiguiente()){
             System.out.print(aux.getLetra() + "    ");
         }
+    }
+    
+    public void Graficar(String path){ 
+        File archivo;
+        FileWriter file = null;
+        String contenido;
+        try {
+            archivo = new File("C:\\Users\\ESTUARDO\\Desktop\\"+path+".txt");
+            if(archivo.exists()){
+                archivo.delete();
+            }
+            file = new FileWriter(archivo,true);
+            contenido = CodigoGraphviz();
+            file.write(contenido);
+
+        } catch (Exception e) {
+             System.err.println("Error al escribir el archivo .txt");
+        }finally{
+            try{
+                if(null!= file){
+                    file.close();
+                }
+            }catch(Exception e2){
+                 System.err.println("Error al cerrar el archivo .dot");
+            }
+        }
+        try {
+            Runtime rt = Runtime.getRuntime();
+            String[] cmd = new String[5];
+            cmd[0] = "C:\\Program Files\\Graphviz2.38\\bin\\dot.exe";
+            cmd[1] = "-Tpng";
+            cmd[2] = "C:\\Users\\ESTUARDO\\Desktop\\"+path+".txt";
+            cmd[3] = "-o";
+            cmd[4] = "C:\\Users\\ESTUARDO\\Documents\\Josselyn\\"+path+".png";
+            
+            rt.exec(cmd);
+            
+        } catch (Exception ex) {
+            System.err.println("Error al generar la imagen para el archivo aux_grafico.dot");
+        }
+    } 
+     
+     public String CodigoGraphviz(){
+        return "digraph Fichas{\n"+
+                CodigoInterno()+
+                "}\n";
+    }
+    
+    public String CodigoInterno(){
+        String lineaGraph = "";
+        if(getCabeza() == null){
+            lineaGraph = "Sin palabras"; 
+        }else{
+            NodoFichas aux = getCabeza();
+            lineaGraph +="Inicio -> ";
+            while(aux!= getFin()){
+                    lineaGraph += aux.getLetra()+ "->";
+                    aux = aux.getSiguiente();
+            }
+           lineaGraph += "Final;\n";
+        }
+        return lineaGraph;
     }
     
     

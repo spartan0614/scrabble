@@ -13,7 +13,7 @@ public class AddGamers extends javax.swing.JFrame {
     NodoFichas fuera;
     Ortogonal matrix;
     int dimension;
-    int k = 0;
+    int k = 1;
     
     List<Integer> xDobles = new ArrayList<>();
     List<Integer> yDobles = new ArrayList<>();
@@ -159,19 +159,14 @@ public class AddGamers extends javax.swing.JFrame {
         matrix.GetTripleY(yTriples);
         
         matrix.Llenar(dimension, dimension);
-        
-//        NodoCabecera nodo;
-//        nodo = matrix.getC().Busqueda(2);
-//        NodoOrtogonal nodo1;
-//        nodo1 = nodo.getColumna().getPrimero().getAbajo().getAbajo().getDerecha();
-//        System.out.println(nodo1.getValor() + " "+ nodo1.getX() + " " +nodo1.getY());
-        
+              
        Tablero tab = new Tablero();
        tab.ObtenerDimension(dimension);
        tab.GetMatrizLogica(matrix);
        tab.GetJugadores(gamer);
+       tab.GetTodasFichas(todasPiezas);
        tab.Mostrando();
-        tab.setVisible(true);
+       tab.setVisible(true);
         
         
        
@@ -180,25 +175,24 @@ public class AddGamers extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        Mano almacenar;
+
         for(int i=0; i<7; i++){                             //creando la mano de 7 fichas del jugador desde todosPiezas.
             fuera = todasPiezas.Quitar();
             miMano.Insertar(fuera.getIdLetra(),fuera.getLetra(),fuera.getValor()); 
         }
-        almacenar = miMano;
         
-        gamer.Insertar(k +=1, jTextArea1.getText(), almacenar);    //Agregando a la lista al jugador. 
-        jTextArea1.setText("");
-        
-        gamer.Recorrer();  
-        System.out.println();
-        miMano.EliminarLista(); 
-
-        btnInicio.setEnabled(true);
-         
-               
+        gamer.Insertar(k +=1, jTextArea1.getText(), miMano);    //Agregando a la lista al jugador. 
+        jTextArea1.setText(""); 
+//        gamer.Recorrer();  
+//        System.out.println();      
+        btnInicio.setEnabled(true);  
     }//GEN-LAST:event_btnAddActionPerformed
 
+    
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
