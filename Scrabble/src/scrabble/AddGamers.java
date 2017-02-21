@@ -14,6 +14,7 @@ public class AddGamers extends javax.swing.JFrame {
     Ortogonal matrix;
     int dimension;
     int k = 1;
+    Dictionary diccionario;
     
     List<Integer> xDobles = new ArrayList<>();
     List<Integer> yDobles = new ArrayList<>();
@@ -51,6 +52,10 @@ public class AddGamers extends javax.swing.JFrame {
     public void GetDimension(int tamaño){
         dimension = tamaño;
     } 
+    
+    public void GetDiccionario(Dictionary palabras){
+        diccionario = palabras;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -165,12 +170,9 @@ public class AddGamers extends javax.swing.JFrame {
        tab.GetMatrizLogica(matrix);
        tab.GetJugadores(gamer);
        tab.GetTodasFichas(todasPiezas);
+       tab.GetDiccionario(diccionario);
        tab.Mostrando();
        tab.setVisible(true);
-        
-        
-       
-      
        
     }//GEN-LAST:event_btnInicioActionPerformed
 
@@ -179,15 +181,23 @@ public class AddGamers extends javax.swing.JFrame {
         for(int i=0; i<7; i++){                             //creando la mano de 7 fichas del jugador desde todosPiezas.
             fuera = todasPiezas.Quitar();
             miMano.Insertar(fuera.getIdLetra(),fuera.getLetra(),fuera.getValor()); 
+            
         }
-        
-        gamer.Insertar(k +=1, jTextArea1.getText(), miMano);    //Agregando a la lista al jugador. 
+        Almacenamiento(miMano);
+       
+//        gamer.Insertar(k, jTextArea1.getText(), miMano);    //Agregando a la lista al jugador. 
+//        k++;
         jTextArea1.setText(""); 
 //        gamer.Recorrer();  
 //        System.out.println();      
         btnInicio.setEnabled(true);  
     }//GEN-LAST:event_btnAddActionPerformed
 
+    public void Almacenamiento(Mano almacenar){
+        gamer.Insertar(k, jTextArea1.getText(), almacenar);
+        k++;
+        gamer.Recorrer();
+    }
     
     
     

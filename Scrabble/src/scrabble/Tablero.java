@@ -17,11 +17,14 @@ public class Tablero extends javax.swing.JFrame {
     int dimension;
     JButton[][] table;
     JButton[] fichasEnJuego = new JButton[7];
+    
     int movX = 3;
     int movY = 3;
     Ortogonal matrix;
     Jugador gamers;
     Fichas fichasDisponibles;
+    Dictionary diccionario;
+    String turnoGraficar;
     
     
     public void ObtenerDimension(int tamaño){
@@ -40,14 +43,16 @@ public class Tablero extends javax.swing.JFrame {
         fichasDisponibles = todas;
     }
     
+    public void GetDiccionario(Dictionary palabras){
+        diccionario = palabras;
+    }
+    
     
     public Tablero() {
         initComponents();
     }
      
     public void Mostrando(){
-            
-            
             table = new JButton[dimension][dimension];
             for(int i =0; i<dimension; i++){
                 for(int j=0; j<dimension; j++){
@@ -79,6 +84,7 @@ public class Tablero extends javax.swing.JFrame {
         fichasEnJuego[6] = btnMano6;  
     
         PrimerTurno();
+         Graficos();
      }
     
     public void PrimerTurno(){
@@ -89,19 +95,21 @@ public class Tablero extends javax.swing.JFrame {
     }
     
     public void BuscandoPrimero(int numero){
-        Graficos();
-        
         NodoJugador aux;                                                
-        aux = gamers.getCabeza();                               //aux = primer jugador de la lista
-            do{                                                 //realizar el recorrido mientras aux no sea la cabeza de nuevo
-                if(aux.getNumber() == numero){                  //Si el el numero del nodo auxiliar es igual al número random                          
+        aux = gamers.getCabeza();  
+        
+        if(aux.getNumber()== numero){
+            Turno(aux);
+        }else{
+            while(aux.getSiguiente() != gamers.getCabeza()){
+                if(aux.getNumber() == numero){                                           
                     Turno(aux);
                     break;
                 }
                 aux = aux.getSiguiente();
-            }while(aux != gamers.getCabeza());
-            
-                          
+            }             
+        }
+        
     }
     
     public void Turno(NodoJugador turno){
@@ -114,26 +122,20 @@ public class Tablero extends javax.swing.JFrame {
                 }
                 fichasEnJuego[indice].setText(fichasTurno.getLetra());  //mostrar cada ficha en cada boton de fichasActivas.
                 indice++;
-            }  
+            }
+            
+        turno.getMisFichas().Graficar("jugador", turno.getNumber());
+        turnoGraficar = Integer.toString(turno.getNumber());
+        
     }
     
+   
+    
     public void Graficos(){
-        fichasDisponibles.Graficar("fichas");
-        ImageIcon cot = new ImageIcon("C:\\Users\\ESTUARDO\\Documents\\Josselyn\\fichas.png"); //Mostrando Diccionario.
-        Icon z = new ImageIcon(cot.getImage().getScaledInstance(jLabelCoins.getWidth(), jLabelCoins.getHeight(), Image.SCALE_DEFAULT));
-        jLabelCoins.setIcon(z);
-        this.repaint();
-        
-        fichasDisponibles.Graficar("fichas");
-        ImageIcon fot = new ImageIcon("C:\\Users\\ESTUARDO\\Documents\\Josselyn\\fichas.png"); //Mostrando Fichas actuales
-        Icon icono = new ImageIcon(fot.getImage().getScaledInstance(jLabelCoins.getWidth(), jLabelCoins.getHeight(), Image.SCALE_DEFAULT));
-        jLabelCoins.setIcon(icono);
-        this.repaint();
-        
         gamers.Graficar("jugadores");
         ImageIcon im = new ImageIcon("C:\\Users\\ESTUARDO\\Documents\\Josselyn\\jugadores.png"); //Mostrando Jugadores
         Icon ic = new ImageIcon(im.getImage().getScaledInstance(jLabelJugadores.getWidth(), jLabelJugadores.getHeight(), Image.SCALE_DEFAULT));
-        jLabelCoins.setIcon(ic);
+        jLabelJugadores.setIcon(ic);
         this.repaint();
     }
     
@@ -169,6 +171,7 @@ public class Tablero extends javax.swing.JFrame {
         jPanelCoins = new javax.swing.JPanel();
         jLabelCoins = new javax.swing.JLabel();
         jPanelMano = new javax.swing.JPanel();
+        jLabelMano = new javax.swing.JLabel();
         jPanelMatriz = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnMano0 = new javax.swing.JButton();
@@ -180,19 +183,30 @@ public class Tablero extends javax.swing.JFrame {
         btnMano6 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jTextAreaNew = new javax.swing.JTextArea();
         btnAddWord = new javax.swing.JButton();
         btnValidar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabelTurno = new javax.swing.JLabel();
+        Check0 = new javax.swing.JCheckBox();
+        Check1 = new javax.swing.JCheckBox();
+        Check2 = new javax.swing.JCheckBox();
+        Check3 = new javax.swing.JCheckBox();
+        Check4 = new javax.swing.JCheckBox();
+        Check5 = new javax.swing.JCheckBox();
+        Check6 = new javax.swing.JCheckBox();
+        btnCambiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
 
         jTabbedPane4.setFont(new java.awt.Font("Consolas", 0, 11)); // NOI18N
-
-        jLabelJugadores.setText("jLabel4");
+        jTabbedPane4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane4MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelGamersLayout = new javax.swing.GroupLayout(jPanelGamers);
         jPanelGamers.setLayout(jPanelGamersLayout);
@@ -244,11 +258,11 @@ public class Tablero extends javax.swing.JFrame {
         jPanelMano.setLayout(jPanelManoLayout);
         jPanelManoLayout.setHorizontalGroup(
             jPanelManoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 340, Short.MAX_VALUE)
+            .addComponent(jLabelMano, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
         );
         jPanelManoLayout.setVerticalGroup(
             jPanelManoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 461, Short.MAX_VALUE)
+            .addComponent(jLabelMano, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
         );
 
         jTabbedPane4.addTab("Mano Jugador", jPanelMano);
@@ -272,13 +286,18 @@ public class Tablero extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Consolas", 0, 11)); // NOI18N
         jLabel2.setText("Mano Jugador Activo");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jTextArea2.setAutoscrolls(false);
-        jScrollPane2.setViewportView(jTextArea2);
+        jTextAreaNew.setColumns(20);
+        jTextAreaNew.setRows(5);
+        jTextAreaNew.setAutoscrolls(false);
+        jScrollPane2.setViewportView(jTextAreaNew);
 
         btnAddWord.setFont(new java.awt.Font("Consolas", 0, 10)); // NOI18N
         btnAddWord.setText("Agregar");
+        btnAddWord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddWordActionPerformed(evt);
+            }
+        });
 
         btnValidar.setFont(new java.awt.Font("Consolas", 0, 10)); // NOI18N
         btnValidar.setText("Validar Tiro");
@@ -294,41 +313,61 @@ public class Tablero extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
         jLabel3.setText("Turno:");
 
-        jLabelTurno.setText("jLabel4");
+        btnCambiar.setFont(new java.awt.Font("Consolas", 0, 10)); // NOI18N
+        btnCambiar.setText("Cambiar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(737, Short.MAX_VALUE)
+                .addGap(739, 739, 739)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnAddWord)
-                                .addGap(50, 50, 50))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabelTurno)
-                                .addGap(67, 67, 67))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(104, 104, 104))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnMano0)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnMano1)
-                                .addGap(10, 10, 10)
-                                .addComponent(btnMano2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnMano3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnAddWord)
+                                    .addComponent(Check6)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnCambiar)
+                                        .addGap(8, 8, 8))
+                                    .addComponent(Check5)
+                                    .addComponent(Check4))
+                                .addGap(62, 62, 62))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(40, 40, 40))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(104, 104, 104)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnMano0)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnMano1)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(btnMano2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnMano3))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(28, 28, 28)
+                                                .addComponent(jLabelTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(14, 14, 14)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(Check2)
+                                                    .addComponent(Check0)
+                                                    .addComponent(Check1)
+                                                    .addComponent(Check3))))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(18, 18, 18)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -361,12 +400,34 @@ public class Tablero extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelTurno)
+                        .addComponent(jLabelTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddWord)
-                        .addGap(148, 148, 148)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAddWord)
+                                .addGap(17, 17, 17)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Check2)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(Check0)
+                                        .addGap(3, 3, 3))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Check4)
+                                        .addGap(18, 18, 18)))
+                                .addComponent(Check5))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(105, 105, 105)
+                                .addComponent(Check1)))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Check3)
+                            .addComponent(Check6))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCambiar)
+                        .addGap(76, 76, 76)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnValidar)
@@ -392,6 +453,41 @@ public class Tablero extends javax.swing.JFrame {
     private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
         
     }//GEN-LAST:event_btnValidarActionPerformed
+
+    private void jTabbedPane4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane4MouseClicked
+        if(jTabbedPane4.getSelectedIndex() == 0){
+            gamers.Graficar("jugadores");
+            ImageIcon im = new ImageIcon("C:\\Users\\ESTUARDO\\Documents\\Josselyn\\jugadores.png"); //Mostrando Jugadores
+            Icon ic = new ImageIcon(im.getImage().getScaledInstance(jLabelJugadores.getWidth(), jLabelJugadores.getHeight(), Image.SCALE_DEFAULT));
+            jLabelJugadores.setIcon(ic);
+            this.repaint();
+        }else if(jTabbedPane4.getSelectedIndex() ==1){
+            diccionario.Graficar("diccionario");
+            ImageIcon cot = new ImageIcon("C:\\Users\\ESTUARDO\\Documents\\Josselyn\\diccionario.png"); //Mostrando Diccionario.
+            Icon z = new ImageIcon(cot.getImage().getScaledInstance(jLabelDic.getWidth(), jLabelDic.getHeight(), Image.SCALE_DEFAULT));
+            jLabelDic.setIcon(z);
+            this.repaint();
+        }else if(jTabbedPane4.getSelectedIndex() ==2){
+            fichasDisponibles.Graficar("fichas");
+            ImageIcon fot = new ImageIcon("C:\\Users\\ESTUARDO\\Documents\\Josselyn\\fichas.png"); //Mostrando Fichas actuales
+            Icon icono = new ImageIcon(fot.getImage().getScaledInstance(jLabelCoins.getWidth(), jLabelCoins.getHeight(), Image.SCALE_DEFAULT));
+            jLabelCoins.setIcon(icono);
+            this.repaint();
+        }else if(jTabbedPane4.getSelectedIndex() ==3){
+            ImageIcon fot = new ImageIcon("C:\\Users\\ESTUARDO\\Documents\\Josselyn\\jugador"+turnoGraficar+".png"); //Mostrando Fichas del jugador
+            Icon icono = new ImageIcon(fot.getImage().getScaledInstance(jLabelMano.getWidth(), jLabelMano.getHeight(), Image.SCALE_DEFAULT));
+            jLabelMano.setIcon(icono);
+            this.repaint();
+        }
+        
+            
+        
+    }//GEN-LAST:event_jTabbedPane4MouseClicked
+
+    private void btnAddWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddWordActionPerformed
+        diccionario.Insertar(jTextAreaNew.getText());
+        jTextAreaNew.setText("");
+    }//GEN-LAST:event_btnAddWordActionPerformed
     
     /**
      * @param args the command line arguments
@@ -429,7 +525,15 @@ public class Tablero extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox Check0;
+    private javax.swing.JCheckBox Check1;
+    private javax.swing.JCheckBox Check2;
+    private javax.swing.JCheckBox Check3;
+    private javax.swing.JCheckBox Check4;
+    private javax.swing.JCheckBox Check5;
+    private javax.swing.JCheckBox Check6;
     private javax.swing.JButton btnAddWord;
+    private javax.swing.JButton btnCambiar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnMano0;
     private javax.swing.JButton btnMano1;
@@ -445,6 +549,7 @@ public class Tablero extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelCoins;
     private javax.swing.JLabel jLabelDic;
     private javax.swing.JLabel jLabelJugadores;
+    private javax.swing.JLabel jLabelMano;
     private javax.swing.JLabel jLabelTurno;
     private javax.swing.JPanel jPanelCoins;
     private javax.swing.JPanel jPanelDic;
@@ -453,6 +558,6 @@ public class Tablero extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelMatriz;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane4;
-    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextAreaNew;
     // End of variables declaration//GEN-END:variables
 }

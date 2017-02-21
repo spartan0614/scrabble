@@ -30,7 +30,7 @@ public class Mano {
      public void Recorrer(){   
         NodoFichas mostrar;       
         for(mostrar = getCabeza(); mostrar != null; mostrar = mostrar.getSiguiente()){
-            System.out.println(mostrar.getLetra()+"  ");
+            System.out.print(mostrar.getLetra()+"  ");
         }
     }     
     public void EliminarLista(){
@@ -39,12 +39,13 @@ public class Mano {
         }
     }
     
-     public void Graficar(String path){ 
+     public void Graficar(String path, int turno){ 
+        String cadena = Integer.toString(turno);
         File archivo;
         FileWriter file = null;
         String contenido;
         try {
-            archivo = new File("C:\\Users\\ESTUARDO\\Desktop\\"+path+".txt");
+            archivo = new File("C:\\Users\\ESTUARDO\\Desktop\\"+path+cadena+".txt");
             if(archivo.exists()){
                 archivo.delete();
             }
@@ -68,9 +69,9 @@ public class Mano {
             String[] cmd = new String[5];
             cmd[0] = "C:\\Program Files\\Graphviz2.38\\bin\\dot.exe";
             cmd[1] = "-Tpng";
-            cmd[2] = "C:\\Users\\ESTUARDO\\Desktop\\"+path+".txt";
+            cmd[2] = "C:\\Users\\ESTUARDO\\Desktop\\"+path+cadena+".txt";
             cmd[3] = "-o";
-            cmd[4] = "C:\\Users\\ESTUARDO\\Documents\\Josselyn\\"+path+".png";
+            cmd[4] = "C:\\Users\\ESTUARDO\\Documents\\Josselyn\\"+path+cadena+".png";
             
             rt.exec(cmd);
             

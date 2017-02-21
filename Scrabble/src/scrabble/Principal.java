@@ -451,12 +451,8 @@ public class Principal extends javax.swing.JFrame {
        send.GetDoubleY(yDobles);
        send.GetTripleX(xTriples);
        send.GetTripleY(yTriples);
-    
-       
-        listDictionary.Graficar("diccionario");      //Graficando la lista simple de palabras que contiene el diccionario.
-        
-        
-        send.setVisible(true);          
+       send.GetDiccionario(listDictionary); 
+       send.setVisible(true);          
     }//GEN-LAST:event_btnJugarActionPerformed
 
     /**

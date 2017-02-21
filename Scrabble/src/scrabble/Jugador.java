@@ -65,11 +65,12 @@ public class Jugador {
             archivo = new File("C:\\Users\\ESTUARDO\\Desktop\\"+path+".txt");
             if(archivo.exists()){
                 archivo.delete();
+            }else{
+                file = new FileWriter(archivo,true);
+                contenido = CodigoGraphviz();
+                file.write(contenido);
             }
-            file = new FileWriter(archivo,true);
-            contenido = CodigoGraphviz();
-            file.write(contenido);
-
+            
         } catch (Exception e) {
              System.err.println("Error al escribir el archivo .txt");
         }finally{
