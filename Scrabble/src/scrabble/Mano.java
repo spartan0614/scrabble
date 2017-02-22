@@ -33,11 +33,33 @@ public class Mano {
             System.out.print(mostrar.getLetra()+"  ");
         }
     }     
-    public void EliminarLista(){
-        while(getCabeza()!= null){
-            setCabeza(getCabeza().getSiguiente());
+    
+     public void Eliminar(int entrada){
+        NodoFichas actual, anterior;
+        boolean encontrado;
+        actual = getCabeza();
+        anterior = null;
+        encontrado = false;
+        while((actual != null) && (!encontrado)){
+            encontrado = (actual.getIdLetra() == entrada);
+            if(!encontrado){
+                anterior = actual;
+                actual = actual.getSiguiente();
+            }
         }
-    }
+        
+        if(actual != null){
+            if (actual == getCabeza()){
+                setCabeza(actual.getSiguiente());
+            }else{
+                anterior.setSiguiente(actual.getSiguiente());
+            }
+            actual = null;
+        }
+     
+     }
+    
+    
     
      public void Graficar(String path, int turno){ 
         String cadena = Integer.toString(turno);

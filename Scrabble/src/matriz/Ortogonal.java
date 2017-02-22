@@ -1,4 +1,6 @@
 package matriz;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 /*
@@ -72,8 +74,110 @@ public class Ortogonal {
                
             }
         }     
-    } 
+    }
+    
+    public void Graficar(String path){ 
+        File archivo;
+        FileWriter file = null;
+        String contenido;
+        try {
+            archivo = new File("C:\\Users\\ESTUARDO\\Desktop\\"+path+".txt");
+            if(archivo.exists()){
+                archivo.delete();
+            }
+            file = new FileWriter(archivo,true);
+            contenido = CodigoInterno();
+            file.write(contenido);
 
+        } catch (Exception e) {
+             System.err.println("Error al escribir el archivo matriz.txt");
+        }finally{
+            try{
+                if(null!= file){
+                    file.close();
+                }
+            }catch(Exception e2){
+                 System.err.println("Error al cerrar el archivo matriz.dot");
+            }
+        }
+        try {
+            Runtime rt = Runtime.getRuntime();
+            String[] cmd = new String[5];
+            cmd[0] = "C:\\Program Files\\Graphviz2.38\\bin\\dot.exe";
+            cmd[1] = "-Tpng";
+            cmd[2] = "C:\\Users\\ESTUARDO\\Desktop\\"+path+".txt";
+            cmd[3] = "-o";
+            cmd[4] = "C:\\Users\\ESTUARDO\\Documents\\Josselyn\\"+path+".png";
+            
+            rt.exec(cmd);
+            
+        } catch (Exception ex) {
+            System.err.println("Error al generar la imagen para el archivo aux_grafico.dot");
+        }
+    } 
+    
+    
+//    public String CodigoGraphviz(){
+//        return "digraph Matriz{\n"+
+//                CodigoInterno()+
+//                "}\n";
+//    }
+    
+    public String CodigoInterno(){
+        
+        NodoCabecera cabeceraH = c.getPrimero();
+        String lineaGraph = "";
+        int count = 0;
+        
+        do{
+            count +=1;
+            String aux1 = "Sub"+Integer.toString(count)+"{\n";
+            lineaGraph += aux1;
+            lineaGraph += "rank = same;\n";
+            String aux2 = "";
+            NodoOrtogonal Vaux = cabeceraH.getColumna().getPrimero();
+            
+            do{
+                String coordenada = Integer.toString(Vaux.getX())+","+Integer.toString(Vaux.getY())+"\n";
+                lineaGraph += coordenada;
+                lineaGraph +="[shape = box];\n";
+                aux2 = Integer.toString(Vaux.getValor());
+                if(Vaux.getAbajo()!= null){
+                    aux2 += "->";
+                }else{
+                    aux2 += "[constraint = false];\n";
+                }
+                Vaux = Vaux.getAbajo();
+                
+            }while(Vaux != null);
+            lineaGraph += aux2;
+            lineaGraph += "}\n";
+            cabeceraH = cabeceraH.getSiguiente();
+        }while(cabeceraH != null);
+        
+        
+        NodoLateral cabeceraL = l.getPrimero();
+        
+        do{
+            NodoOrtogonal Haux = cabeceraL.getFila().getPrimero();
+            do{
+                if(Haux.getDerecha() != null){
+                    lineaGraph += "->";
+                }else{
+                    lineaGraph+= ";\n";
+                }
+                Haux = Haux.getDerecha();
+            }while(Haux != null);
+            cabeceraL = cabeceraL.getSiguiente();
+        }while(cabeceraL != null);
+        
+        lineaGraph += "probando ->"+Integer.toString(c.getPrimero().getColumna().getPrimero().getValor());
+        
+        
+        return lineaGraph;
+    }
+    
+   
     /**
      * @return the c
      */

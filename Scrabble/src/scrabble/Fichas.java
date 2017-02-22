@@ -27,6 +27,7 @@ public class Fichas {
     setFin(nuevo);
     }
     
+    
     public NodoFichas Quitar(){   //sale un elemento frente y retorna la ficha que se sacó
         NodoFichas aux = null;
         if (!colaVacia()){

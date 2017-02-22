@@ -3,9 +3,12 @@ package scrabble;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import matriz.*;
 
 /*
@@ -17,6 +20,9 @@ public class Tablero extends javax.swing.JFrame {
     int dimension;
     JButton[][] table;
     JButton[] fichasEnJuego = new JButton[7];
+    JCheckBox[] fichasCambio = new JCheckBox[7];
+    int[] idFichas = new int[7];
+    int[] valorFichas = new int[7];
     
     int movX = 3;
     int movY = 3;
@@ -25,6 +31,7 @@ public class Tablero extends javax.swing.JFrame {
     Fichas fichasDisponibles;
     Dictionary diccionario;
     String turnoGraficar;
+    NodoJugador auxTurno;
     
     
     public void ObtenerDimension(int tamaño){
@@ -82,15 +89,24 @@ public class Tablero extends javax.swing.JFrame {
         fichasEnJuego[4] = btnMano4;
         fichasEnJuego[5] = btnMano5;
         fichasEnJuego[6] = btnMano6;  
+        
+        fichasCambio[0] = Check0;
+        fichasCambio[1] = Check1;
+        fichasCambio[2] = Check2;
+        fichasCambio[3] = Check3;
+        fichasCambio[4] = Check4;
+        fichasCambio[5] = Check5;
+        fichasCambio[6] = Check6;
+        
     
         PrimerTurno();
-         Graficos();
+        Graficos();
      }
     
     public void PrimerTurno(){
         Random aleatorio = new Random();
         int numero = aleatorio.nextInt(gamers.Contar())+1;
-        
+        System.out.println(gamers.Contar());
         BuscandoPrimero(numero);
     }
     
@@ -117,15 +133,16 @@ public class Tablero extends javax.swing.JFrame {
         jLabelTurno.setText(turno.getUser());         //Le damos al label el nombre del jugador del turno
         NodoFichas fichasTurno;                     //Recorriendo las fichas del jugador turno
             for(fichasTurno = turno.getMisFichas().getCabeza(); fichasTurno != null; fichasTurno = fichasTurno.getSiguiente()){
-                if(indice == 7){   //Quitar cuando cada jugador tengan sus 7 fichas.
-                    break;
-                }
                 fichasEnJuego[indice].setText(fichasTurno.getLetra());  //mostrar cada ficha en cada boton de fichasActivas.
+                fichasCambio[indice].setText(fichasTurno.getLetra());   //mostrar cada ficha en los botones de cambio
+                idFichas[indice] = fichasTurno.getIdLetra();        //matriz lógica que contiene los id de letras para poder hacer cambios.
+                valorFichas[indice] = fichasTurno.getValor();       //matriz lógica que contiene los valores de las letras
                 indice++;
             }
             
         turno.getMisFichas().Graficar("jugador", turno.getNumber());
         turnoGraficar = Integer.toString(turno.getNumber());
+        auxTurno = turno;
         
     }
     
@@ -173,6 +190,7 @@ public class Tablero extends javax.swing.JFrame {
         jPanelMano = new javax.swing.JPanel();
         jLabelMano = new javax.swing.JLabel();
         jPanelMatriz = new javax.swing.JPanel();
+        jLabelMatriz = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnMano0 = new javax.swing.JButton();
         btnMano1 = new javax.swing.JButton();
@@ -258,7 +276,10 @@ public class Tablero extends javax.swing.JFrame {
         jPanelMano.setLayout(jPanelManoLayout);
         jPanelManoLayout.setHorizontalGroup(
             jPanelManoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelMano, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+            .addGroup(jPanelManoLayout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addComponent(jLabelMano, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanelManoLayout.setVerticalGroup(
             jPanelManoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,11 +292,11 @@ public class Tablero extends javax.swing.JFrame {
         jPanelMatriz.setLayout(jPanelMatrizLayout);
         jPanelMatrizLayout.setHorizontalGroup(
             jPanelMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 340, Short.MAX_VALUE)
+            .addComponent(jLabelMatriz, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
         );
         jPanelMatrizLayout.setVerticalGroup(
             jPanelMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 461, Short.MAX_VALUE)
+            .addComponent(jLabelMatriz, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
         );
 
         jTabbedPane4.addTab("Matriz de tablero", jPanelMatriz);
@@ -315,6 +336,11 @@ public class Tablero extends javax.swing.JFrame {
 
         btnCambiar.setFont(new java.awt.Font("Consolas", 0, 10)); // NOI18N
         btnCambiar.setText("Cambiar");
+        btnCambiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCambiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -479,8 +505,14 @@ public class Tablero extends javax.swing.JFrame {
             jLabelMano.setIcon(icono);
             this.repaint();
         }
-        
-            
+//        }else if(jTabbedPane4.getSelectedIndex() == 4){
+//            matrix.Graficar("Lamatriz");
+//            ImageIcon fot = new ImageIcon("C:\\Users\\ESTUARDO\\Documents\\Josselyn\\Lamatriz.png"); //Mostrando Fichas actuales
+//            Icon icono = new ImageIcon(fot.getImage().getScaledInstance(jLabelMatriz.getWidth(), jLabelMatriz.getHeight(), Image.SCALE_DEFAULT));
+//            jLabelMatriz.setIcon(icono);
+//            this.repaint();
+//            
+//        }
         
     }//GEN-LAST:event_jTabbedPane4MouseClicked
 
@@ -488,6 +520,37 @@ public class Tablero extends javax.swing.JFrame {
         diccionario.Insertar(jTextAreaNew.getText());
         jTextAreaNew.setText("");
     }//GEN-LAST:event_btnAddWordActionPerformed
+
+    private void btnCambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarActionPerformed
+        NodoFichas fuera;
+        for(int i= 0; i<7; i++){
+            if( fichasCambio[i].isSelected()){   //si un CheckBox está seleccionado
+                
+                fichasDisponibles.Insertar(idFichas[i],fichasCambio[i].getText(), valorFichas[i]); //insertamos a la cola los datos de la ficha
+                fichasCambio[i].setText("");                                                          //Quitamos el texto del CheckBox.
+                fichasEnJuego[i].setText("");                                       //Quitamos el texto al boton.
+                idFichas[i] = 0;                                                    //quitar el id de la ficha
+                valorFichas[i] = 0;                                                 //quitamos el valor de la ficha
+                auxTurno.getMisFichas().Eliminar(idFichas[i]);                      //Eliminamos de la lista simple
+                fuera = fichasDisponibles.Quitar();                                 //Quitamos una ficha de la cola.
+                auxTurno.getMisFichas().Insertar(fuera.getIdLetra(), fuera.getLetra(), fuera.getValor()); //Ingresamos una nueva letra a la lista simple.
+                fichasCambio[i].setText(fuera.getLetra());                              //Le damos nuevo texto al CheckBox
+                fichasEnJuego[i].setText(fuera.getLetra());                                  //Le damos nuevo texto al boton
+                idFichas[i] = fuera.getIdLetra();                                            //le damos nuevo id a la lista lógica
+                valorFichas[i] = fuera.getValor();                                           //le damos nuevo valor a la lista lógica       
+            }
+        }
+        auxTurno = auxTurno.getSiguiente();
+        
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);      
+//        }
+//        
+        Turno(auxTurno);
+        
+    }//GEN-LAST:event_btnCambiarActionPerformed
     
     /**
      * @param args the command line arguments
@@ -550,6 +613,7 @@ public class Tablero extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelDic;
     private javax.swing.JLabel jLabelJugadores;
     private javax.swing.JLabel jLabelMano;
+    private javax.swing.JLabel jLabelMatriz;
     private javax.swing.JLabel jLabelTurno;
     private javax.swing.JPanel jPanelCoins;
     private javax.swing.JPanel jPanelDic;

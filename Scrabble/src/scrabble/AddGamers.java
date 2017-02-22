@@ -178,31 +178,22 @@ public class AddGamers extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 
+        miMano = new Mano();
+        
         for(int i=0; i<7; i++){                             //creando la mano de 7 fichas del jugador desde todosPiezas.
             fuera = todasPiezas.Quitar();
             miMano.Insertar(fuera.getIdLetra(),fuera.getLetra(),fuera.getValor()); 
-            
         }
-        Almacenamiento(miMano);
-       
-//        gamer.Insertar(k, jTextArea1.getText(), miMano);    //Agregando a la lista al jugador. 
-//        k++;
-        jTextArea1.setText(""); 
-//        gamer.Recorrer();  
-//        System.out.println();      
+        
+        gamer.Insertar(k, jTextArea1.getText(), miMano);
+        k++;
+        //todasPiezas.Imprimir();
+        jTextArea1.setText("");    
+        gamer.Recorrer();
         btnInicio.setEnabled(true);  
+        
     }//GEN-LAST:event_btnAddActionPerformed
 
-    public void Almacenamiento(Mano almacenar){
-        gamer.Insertar(k, jTextArea1.getText(), almacenar);
-        k++;
-        gamer.Recorrer();
-    }
-    
-    
-    
-    
-    
     /**
      * @param args the command line arguments
      */
