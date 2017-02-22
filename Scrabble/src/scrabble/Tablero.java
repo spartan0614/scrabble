@@ -362,23 +362,17 @@ public class Tablero extends javax.swing.JFrame {
                                     .addComponent(Check5)
                                     .addComponent(Check4))
                                 .addGap(62, 62, 62))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(40, 40, 40))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(104, 104, 104)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnMano0)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnMano1)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(btnMano2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnMano3))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(40, 40, 40))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(104, 104, 104)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -393,7 +387,16 @@ public class Tablero extends javax.swing.JFrame {
                                                     .addComponent(Check1)
                                                     .addComponent(Check3))))
                                         .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(18, 18, 18)))
+                                .addGap(18, 18, 18))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnMano0)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnMano1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnMano2)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnMano3)
+                                .addGap(4, 4, 4)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -477,7 +480,8 @@ public class Tablero extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
-        
+        auxTurno = auxTurno.getSiguiente();
+        Turno(auxTurno);
     }//GEN-LAST:event_btnValidarActionPerformed
 
     private void jTabbedPane4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane4MouseClicked
@@ -540,15 +544,7 @@ public class Tablero extends javax.swing.JFrame {
                 valorFichas[i] = fuera.getValor();                                           //le damos nuevo valor a la lista lógica       
             }
         }
-        auxTurno = auxTurno.getSiguiente();
-        
-//        try {
-//            Thread.sleep(3000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);      
-//        }
-//        
-        Turno(auxTurno);
+       
         
     }//GEN-LAST:event_btnCambiarActionPerformed
     
